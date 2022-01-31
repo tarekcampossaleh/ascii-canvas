@@ -1,4 +1,9 @@
 defmodule AsciiCanvas.Drawingmodel do
+  alias AsciiCanvas.Repo
+  alias AsciiCanvas.CanvasSchema
+
+  import AsciiCanvas.CanvasModel
+
   defp insert_char_at(canvas, x, y, char) do
     # TODO: fix bug when y overflows canvas size
     row =
@@ -11,7 +16,7 @@ defmodule AsciiCanvas.Drawingmodel do
     canvas
   end
 
-  def write_canvas(canvas, width, height, x, y, outline, fill) do
+  defp write_canvas(canvas, width, height, x, y, outline, fill) do
     Enum.reduce(x..(width + x), canvas, fn i, acc ->
       Enum.reduce(y..(height + y), acc, fn j, inc ->
         if i == x or i == x + width or j == y or j == y + height do
@@ -25,5 +30,11 @@ defmodule AsciiCanvas.Drawingmodel do
         end
       end)
     end)
+  end
+
+  @doc "Draws and update a canvas.value of a given canvas id"
+  def drawing(canvas_id, width, height, x, y, outline, fill) do
+    canvas = Repo.get(CanvasSchema, canvas_id)
+    update(canvas_id, write_canvas(canvas.value, width, height, x, y, outline, fill))
   end
 end
