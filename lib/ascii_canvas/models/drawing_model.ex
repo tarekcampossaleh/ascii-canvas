@@ -4,6 +4,8 @@ defmodule AsciiCanvas.Drawingmodel do
 
   import AsciiCanvas.CanvasModel
 
+  @axis_limit 24
+
   defp insert_char_at(canvas, x, y, char) do
     row =
       Enum.at(canvas, y)
@@ -17,7 +19,7 @@ defmodule AsciiCanvas.Drawingmodel do
   defp write_canvas(canvas, width, height, x, y, outline, fill) do
     Enum.reduce(x..(width + x), canvas, fn i, acc ->
       Enum.reduce(y..(height + y), acc, fn j, inc ->
-        if j > 24 do
+        if j > @axis_limit do
           inc
         else
           if i == x or i == x + width or j == y or j == y + height do
