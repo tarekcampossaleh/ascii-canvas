@@ -1,4 +1,4 @@
-defmodule AsciiCanvas.Drawingmodel do
+defmodule AsciiCanvas.DrawingModel do
   alias AsciiCanvas.Repo
   alias AsciiCanvas.CanvasSchema
 

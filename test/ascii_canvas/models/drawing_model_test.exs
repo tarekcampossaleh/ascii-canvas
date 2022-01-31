@@ -2,12 +2,12 @@ defmodule AsciiCanvas.DrawingModelTest do
   use AsciiCanvas.DataCase
 
   alias AsciiCanvas.CanvasModel
-  alias AsciiCanvas.Drawingmodel
+  alias AsciiCanvas.DrawingModel
 
   describe "Drawing Model:" do
     test "Rectangle at [14, 0] with width 7, height 6, outline character: ., fill: ." do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
 
       assert new_canvas.value == [
                "              ........                            ",
@@ -40,7 +40,7 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "Rectangle at [0, 3] with width 8, height 4, outline character: 0, fill: none" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
 
       assert new_canvas.value == [
                "                                                  ",
@@ -73,7 +73,7 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "Rectangle at [5, 5] with width 5, height 3, outline character: X, fill: ~" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
 
       assert new_canvas.value == [
                "                                                  ",
@@ -106,9 +106,9 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "Mesh of 3 Retangle's" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
-      Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
+      DrawingModel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
+      DrawingModel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
 
       assert new_canvas.value == [
                "              ........                            ",
@@ -141,9 +141,9 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "Wrong order Mesh of 3 Retangle's" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
-      Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
+      DrawingModel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
+      DrawingModel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
 
       refute new_canvas.value == [
                "              ........                            ",
@@ -176,8 +176,8 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "any kind of ascii utf-8 " do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, "Ø", "¼")
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 10, 10, 15, 10, "±", "æ")
+      DrawingModel.drawing(canvas.id, 7, 6, 14, 0, "Ø", "¼")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 10, 10, 15, 10, "±", "æ")
 
       assert new_canvas.value == [
                "              ØØØØØØØØ                            ",
@@ -210,7 +210,7 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "outline as number" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, 3, "X")
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 7, 6, 14, 0, 3, "X")
 
       assert new_canvas.value == [
                "              33333333                            ",
@@ -243,7 +243,7 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "fill as number" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, "X", 3)
+      {:ok, new_canvas} = DrawingModel.drawing(canvas.id, 7, 6, 14, 0, "X", 3)
 
       assert new_canvas.value == [
                "              XXXXXXXX                            ",
