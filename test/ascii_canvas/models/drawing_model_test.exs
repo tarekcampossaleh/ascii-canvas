@@ -106,8 +106,8 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "Mesh of 3 Retangle's" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
+      Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
+      Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
       {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
 
       assert new_canvas.value == [
@@ -141,8 +141,8 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "Wrong order Mesh of 3 Retangle's" do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
+      Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
+      Drawingmodel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
       {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 5, 3, 5, 5, "X", "~")
 
       refute new_canvas.value == [
@@ -176,7 +176,7 @@ defmodule AsciiCanvas.DrawingModelTest do
 
     test "any kind of ascii utf-8 " do
       {:ok, canvas} = CanvasModel.create_blank_value()
-      {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, "Ø", "¼")
+      Drawingmodel.drawing(canvas.id, 7, 6, 14, 0, "Ø", "¼")
       {:ok, new_canvas} = Drawingmodel.drawing(canvas.id, 10, 10, 15, 10, "±", "æ")
 
       assert new_canvas.value == [
