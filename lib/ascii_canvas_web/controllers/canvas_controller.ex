@@ -13,7 +13,7 @@ defmodule AsciiCanvasWeb.CanvasController do
   # end
   #
   #
-  def validate(char) when char != "none" do
+  defp validate(char) when char != "none" do
     if byte_size(char) > 1 do
       false
     else
@@ -24,6 +24,7 @@ defmodule AsciiCanvasWeb.CanvasController do
   @outline_fill_error "One of either Fill or Outline should always be present"
   @byte_size_error "Fill and Outline should always have byte_size lenght of 1"
 
+  @doc "http post method to handle /canvas conn with given arguments of a retangle, flood_fill or without body to create a blank 50x25 canvas"
   def write_canvas(conn, %{
         "retangle" => %{
           "id" => id,
@@ -53,6 +54,33 @@ defmodule AsciiCanvasWeb.CanvasController do
 
       canvas ->
         {:ok, new_canvas} = DrawingModel.drawing(canvas.id, width, height, x, y, outline, fill)
+
+        conn
+        |> put_status(:ok)
+        |> render("canvas.json", %{canvas_id: new_canvas.id, value: new_canvas.value})
+    end
+  end
+
+  def write_canvas(conn, %{
+        "flood_fill" => %{
+          "id" => id,
+          "x" => x,
+          "y" => y,
+          "fill_char" => fill
+        }
+      }) do
+    case Repo.get(CanvasSchema, id) do
+      nil ->
+        {:ok, canvas} = CanvasModel.create_blank_value()
+
+        {:ok, new_canvas} = DrawingModel.drawing_flood(canvas.id, x, y, fill)
+
+        conn
+        |> put_status(:created)
+        |> render("canvas.json", %{canvas_id: new_canvas.id, value: new_canvas.value})
+
+      canvas ->
+        {:ok, new_canvas} = DrawingModel.drawing_flood(canvas.id, x, y, fill)
 
         conn
         |> put_status(:ok)
