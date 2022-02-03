@@ -2,13 +2,14 @@ defmodule AsciiCanvas.CanvasModel do
   alias AsciiCanvas.Repo
   alias AsciiCanvas.CanvasSchema, as: Canvas
 
-  defp get_canvas(id), do: Repo.get(Canvas, id)
-
   defp create(params) do
     %Canvas{}
     |> Canvas.changeset(params)
     |> Repo.insert()
   end
+
+  @doc "Get canvas schema from database by a given id"
+  def get_canvas(id), do: Repo.get(Canvas, id)
 
   @doc "Updates a canvas value by given id"
   def update(canvas_id, value) do

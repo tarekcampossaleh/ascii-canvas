@@ -2,6 +2,7 @@ defmodule AsciiCanvasWeb.Router do
   use AsciiCanvasWeb, :router
 
   alias AsciiCanvasWeb.CanvasController
+  alias AsciiCanvasWeb.ShowCanvasController
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -26,6 +27,14 @@ defmodule AsciiCanvasWeb.Router do
     pipe_through [:api]
 
     post "/canvas", CanvasController, :write_canvas
+  end
+
+  scope "/" do
+    pipe_through [:browser]
+
+    # get "/canvas", ShowCanvasController, :get_canvas
+
+    live "/canvas/:id", ShowCanvasController
   end
 
   # Other scopes may use custom stacks.

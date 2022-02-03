@@ -59,7 +59,8 @@ config :ascii_canvas, AsciiCanvasWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/ascii_canvas_web/(live|views)/.*(ex)$",
-      ~r"lib/ascii_canvas_web/templates/.*(eex)$"
+      ~r"lib/ascii_canvas_web/templates/.*(eex)$",
+      ~r"lib/ascii_canvas_web/controllers/.*(ex)$"
     ]
   ]
 
