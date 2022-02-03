@@ -32,8 +32,6 @@ defmodule AsciiCanvasWeb.Router do
   scope "/" do
     pipe_through [:browser]
 
-    # get "/canvas", ShowCanvasController, :get_canvas
-
     live "/canvas/:id", ShowCanvasController
   end
 
