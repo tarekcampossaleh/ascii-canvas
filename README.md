@@ -1,5 +1,8 @@
 # AsciiCanvas
 > An Elixir + PhoenixLiveView application to make ASCII art drawing on a 50x25 canvas
+> - [Server Drawing Endpoints API](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes)
+> - [Read-Only Client (live-view)](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#read-only-client-live-view)
+
 
 To start your Phoenix server:
 
@@ -11,22 +14,6 @@ To start your Phoenix server:
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser, and make http requests to `localhost:4000/canvas` to perform drawing operations
 
 Once populated, you can live-view the canvas by accessing the `localhost:4000/canvas/id` where `id` is a query param that references an existing canvas_id
-
-## Read-Only Client (live-view)
-> In order to correctly render a canvas, it is necessary to pre-create a blank canvas, [follow this request](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes) in order to perform that
-
-```css
-get /canvas/:id
-``` 
-if canvas_id = 1 
-
-```css
-get /canvas/1
-
- # or
- 
-http://localhost:4000/canvas/1
-``` 
 
 ## API Instructions
 
@@ -271,3 +258,24 @@ POST /canvas
   }
 }
 ```
+
+## Read-Only Client (live-view)
+> In order to correctly render a canvas, it is necessary to pre-create a blank canvas, [follow this request](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes) in order to perform that
+
+```css
+get /canvas/:id
+``` 
+if canvas_id = 1 
+
+```css
+get /canvas/1
+
+ # or
+ 
+http://localhost:4000/canvas/1
+``` 
+
+<p align="center">
+ <img src="./.github/live-view.png" alt="canvas_id=1">
+
+<p/>
