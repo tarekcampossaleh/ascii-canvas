@@ -11,6 +11,5 @@ defmodule AsciiCanvas.CanvasSchema do
     canvas
     |> cast(params, [:value])
     |> validate_required(:value)
-
   end
 end
