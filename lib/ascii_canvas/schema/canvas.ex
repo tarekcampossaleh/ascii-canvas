@@ -12,6 +12,5 @@ defmodule AsciiCanvas.CanvasSchema do
     |> cast(params, [:value])
     |> validate_required(:value)
 
-    # TODO: create canvas.value from changeset
   end
 end
