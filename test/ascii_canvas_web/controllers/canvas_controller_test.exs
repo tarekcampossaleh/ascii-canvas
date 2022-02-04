@@ -265,7 +265,14 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
           }
         })
 
-      res = json_response(conn, 201)
+      res = json_response(conn, 412)
+
+      assert res == %{
+               "data" => %{
+                 "error" =>
+                   "One of either Fill or Outline should always be present or should always have byte_size lenght of 1"
+               }
+             }
 
       refute res == %{
                "data" => %{
@@ -315,7 +322,14 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
           }
         })
 
-      res = json_response(conn, 201)
+      res = json_response(conn, 412)
+
+      assert res == %{
+               "data" => %{
+                 "error" =>
+                   "One of either Fill or Outline should always be present or should always have byte_size lenght of 1"
+               }
+             }
 
       refute res == %{
                "data" => %{
@@ -347,6 +361,30 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
                    "                                                  "
                  ],
                  "canvas_id" => res["data"]["canvas_id"]
+               }
+             }
+    end
+
+    test "post /canvas retangle with outline and fill with lenght higher then 1", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "retangle" => %{
+            "id" => 1,
+            "width" => 14,
+            "height" => 6,
+            "x" => 10,
+            "y" => 3,
+            "outline_char" => "XXX",
+            "fill_char" => "XXX"
+          }
+        })
+
+      res = json_response(conn, 412)
+
+      assert res == %{
+               "data" => %{
+                 "error" =>
+                   "One of either Fill or Outline should always be present or should always have byte_size lenght of 1"
                }
              }
     end

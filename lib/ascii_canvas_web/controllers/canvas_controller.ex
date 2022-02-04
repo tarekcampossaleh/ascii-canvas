@@ -3,8 +3,7 @@ defmodule AsciiCanvasWeb.CanvasController do
 
   alias AsciiCanvas.{CanvasSchema, DrawingModel, CanvasModel, Repo}
 
-  @outline_fill_error "One of either Fill or Outline should always be present"
-  @byte_size_error "Fill and Outline should always have byte_size lenght of 1"
+  @outline_fill_error "One of either Fill or Outline should always be present or should always have byte_size lenght of 1"
 
   @doc "http post method to handle /canvas conn with given arguments of a retangle, flood_fill or without body to create a blank 50x25 canvas"
   def write_canvas(conn, %{
@@ -18,41 +17,35 @@ defmodule AsciiCanvasWeb.CanvasController do
           "fill_char" => fill
         }
       }) do
-    if fill == "" and outline == "",
-      do:
-        conn
-        |> put_status(:precondition_failed)
-        |> render("error.json", message: @outline_fill_error)
+    if (fill == "" and outline == "") or byte_size("#{outline}") > 1 or byte_size("#{fill}") > 1 do
+      conn
+      |> put_status(:precondition_failed)
+      |> render("error.json", message: @outline_fill_error)
+    else
+      outline =
+        if outline == "" do
+          _outline = fill
+        else
+          outline
+        end
 
-    outline =
-      if outline == "" do
-        _outline = fill
-      else
-        outline
+      case Repo.get(CanvasSchema, id) do
+        nil ->
+          {:ok, canvas} = CanvasModel.create_blank_value()
+
+          {:ok, new_canvas} = DrawingModel.drawing(canvas.id, width, height, x, y, outline, fill)
+
+          conn
+          |> put_status(:created)
+          |> render("canvas.json", %{canvas_id: new_canvas.id, value: new_canvas.value})
+
+        canvas ->
+          {:ok, new_canvas} = DrawingModel.drawing(canvas.id, width, height, x, y, outline, fill)
+
+          conn
+          |> put_status(:ok)
+          |> render("canvas.json", %{canvas_id: new_canvas.id, value: new_canvas.value})
       end
-
-    if byte_size("#{outline}") > 1 or byte_size("#{fill}") > 1,
-      do:
-        conn
-        |> put_status(:precondition_failed)
-        |> render("error.json", message: @byte_size_error)
-
-    case Repo.get(CanvasSchema, id) do
-      nil ->
-        {:ok, canvas} = CanvasModel.create_blank_value()
-
-        {:ok, new_canvas} = DrawingModel.drawing(canvas.id, width, height, x, y, outline, fill)
-
-        conn
-        |> put_status(:created)
-        |> render("canvas.json", %{canvas_id: new_canvas.id, value: new_canvas.value})
-
-      canvas ->
-        {:ok, new_canvas} = DrawingModel.drawing(canvas.id, width, height, x, y, outline, fill)
-
-        conn
-        |> put_status(:ok)
-        |> render("canvas.json", %{canvas_id: new_canvas.id, value: new_canvas.value})
     end
   end
 
