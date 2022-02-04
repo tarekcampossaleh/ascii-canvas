@@ -1,4 +1,8 @@
-# AsciiCanvas
+
+  <h1 align="center">
+    ASCII Canvas
+  </h1>
+
 > An Elixir + PhoenixLiveView application to make ASCII art drawing on a 50x25 canvas
 > - [Server Drawing Endpoints API](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes)
 > - [Read-Only Client (live-view)](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#read-only-client-live-view)
@@ -19,10 +23,10 @@ Once populated, you can live-view the canvas by accessing the `localhost:4000/ca
 
 ### For Drawing operations, we have the following options:
 
-- *Rectangle*, parameterised with:
-   -  `id` - Globally unique identifier, `integer`, used for select the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next avaliable id is created.
-   -  `width` - A `integer`, used for express the width size of the drawing
-   -  `height` - A `integer`, used for express the height size of the drawing
+- *Rectangle*, parameterized with:
+   -  `id` - Globally unique identifier, `integer`, used for selecting the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next available id is created.
+   -  `width` - A `integer`, used for expressing the width size of the drawing
+   -  `height` - A `integer`, used for expressing the height size of the drawing
    -  `x` - A `integer`, used for defining the upper-left corner x-axis from 0 to 50
    -  `y` - A `integer`, used for defining the upper-left corner y-axis from 0 to 25
    -  `outline_char` A `ASCII utf-8 char` used for defining the outline character. In case of `none`, assign the value `""`
@@ -30,7 +34,7 @@ Once populated, you can live-view the canvas by accessing the `localhost:4000/ca
 
 
 - *Flood_fill*, parameterised with:
-   -  `id` - Globally unique identifier, `integer`, used for select the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next avaliable id is created.
+   -  `id` - Globally unique identifier, `integer`, used for selecting the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next available id is created.
    -  `x` - A `integer`, used for defining the upper-left corner x-axis from 0 to 50
    -  `y` - A `integer`, used for defining the upper-left corner y-axis from 0 to 25
    -  `fill_char` A `ASCII utf-8 char` used for defining the flood fill character.
@@ -260,7 +264,7 @@ POST /canvas
 ```
 
 ## Read-Only Client (live-view)
-> In order to correctly render a canvas, it is necessary to pre-create a blank canvas, [follow this request](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes) in order to perform that
+> To correctly render a canvas, it is necessary to pre-create a blank canvas, [follow this request](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes) to perform that
 
 ```css
 get /canvas/:id
