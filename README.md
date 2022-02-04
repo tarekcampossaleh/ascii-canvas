@@ -6,10 +6,27 @@ To start your Phoenix server:
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+  * Run tests with `mix test`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser, and make http requests to `localhost:4000/canvas` to perform drawing operations
 
 Once populated, you can live-view the canvas by accessing the `localhost:4000/canvas/id` where `id` is a query param that references an existing canvas_id
+
+## Read-Only Client (live-view)
+> In order to correctly render a canvas, it is necessary to pre-create a blank canvas, [follow this request](https://github.com/tarekcampossaleh/ascii-canvas/blob/main/README.md#routes) in order to perform that
+
+```css
+get /canvas/:id
+``` 
+if canvas_id = 1 
+
+```css
+get /canvas/1
+
+ # or
+ 
+http://localhost:4000/canvas/1
+``` 
 
 ## API Instructions
 
