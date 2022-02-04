@@ -6,9 +6,9 @@ defmodule AsciiCanvasWeb.CanvasController do
   @outline_fill_error "One of either Fill or Outline should always be present or should always have byte_size lenght of 1"
   @flood_fill_error "Fill should always be present or should always have byte_size lenght of 1 in flood_fill drawings"
 
-  @doc "http post method to handle /canvas conn with given arguments of a retangle, flood_fill or without body to create a blank 50x25 canvas"
+  @doc "http post method to handle /canvas conn with given arguments of a rectangle, flood_fill or without body to create a blank 50x25 canvas"
   def write_canvas(conn, %{
-        "retangle" => %{
+        "rectangle" => %{
           "id" => id,
           "width" => width,
           "height" => height,

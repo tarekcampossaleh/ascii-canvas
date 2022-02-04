@@ -104,7 +104,7 @@ defmodule AsciiCanvas.DrawingModelTest do
              ]
     end
 
-    test "Mesh of 3 Retangle's" do
+    test "Mesh of 3 Rectangle's" do
       {:ok, canvas} = CanvasModel.create_blank_value()
       DrawingModel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
       DrawingModel.drawing(canvas.id, 8, 4, 0, 3, "0", "")
@@ -139,7 +139,7 @@ defmodule AsciiCanvas.DrawingModelTest do
              ]
     end
 
-    test "Wrong order Mesh of 3 Retangle's" do
+    test "Wrong order Mesh of 3 Rectangle's" do
       {:ok, canvas} = CanvasModel.create_blank_value()
       DrawingModel.drawing(canvas.id, 7, 6, 14, 0, ".", ".")
       DrawingModel.drawing(canvas.id, 8, 4, 0, 3, "0", "")

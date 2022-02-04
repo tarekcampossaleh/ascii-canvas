@@ -2,7 +2,7 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
   use AsciiCanvasWeb.ConnCase
 
   @canvas %{
-    "retangle" => %{
+    "rectangle" => %{
       "id" => 1,
       "width" => 5,
       "height" => 3,
@@ -22,7 +22,7 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
   }
 
   describe "Canvas Controller:" do
-    test "post /canvas retangle [3,2] w: 5 h: 3, outline: @, fill: X", %{conn: conn} do
+    test "post /canvas rectangle [3,2] w: 5 h: 3, outline: @, fill: X", %{conn: conn} do
       conn = post(conn, Routes.canvas_path(conn, :write_canvas), @canvas)
       res = json_response(conn, 201)
 
@@ -60,13 +60,13 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
              }
     end
 
-    test "post /canvas mesh retangle", %{conn: conn} do
+    test "post /canvas mesh rectangle", %{conn: conn} do
       conn = post(conn, Routes.canvas_path(conn, :write_canvas), @canvas)
       res = json_response(conn, 201)
 
       conn =
         post(conn, Routes.canvas_path(conn, :write_canvas), %{
-          "retangle" => %{
+          "rectangle" => %{
             "id" => res["data"]["canvas_id"],
             "width" => 14,
             "height" => 6,
@@ -151,10 +151,10 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
              }
     end
 
-    test "post /canvas retangle with fill none", %{conn: conn} do
+    test "post /canvas rectangle with fill none", %{conn: conn} do
       conn =
         post(conn, Routes.canvas_path(conn, :write_canvas), %{
-          "retangle" => %{
+          "rectangle" => %{
             "id" => 1,
             "width" => 14,
             "height" => 6,
@@ -201,10 +201,10 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
              }
     end
 
-    test "post /canvas retangle with outline none", %{conn: conn} do
+    test "post /canvas rectangle with outline none", %{conn: conn} do
       conn =
         post(conn, Routes.canvas_path(conn, :write_canvas), %{
-          "retangle" => %{
+          "rectangle" => %{
             "id" => 1,
             "width" => 14,
             "height" => 6,
@@ -251,10 +251,10 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
              }
     end
 
-    test "post /canvas retangle with outline and fill none", %{conn: conn} do
+    test "post /canvas rectangle with outline and fill none", %{conn: conn} do
       conn =
         post(conn, Routes.canvas_path(conn, :write_canvas), %{
-          "retangle" => %{
+          "rectangle" => %{
             "id" => 1,
             "width" => 14,
             "height" => 6,
@@ -308,10 +308,10 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
              }
     end
 
-    test "post /canvas retangle with outline with lenght higher then 1", %{conn: conn} do
+    test "post /canvas rectangle with outline with lenght higher then 1", %{conn: conn} do
       conn =
         post(conn, Routes.canvas_path(conn, :write_canvas), %{
-          "retangle" => %{
+          "rectangle" => %{
             "id" => 1,
             "width" => 14,
             "height" => 6,
@@ -365,10 +365,10 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
              }
     end
 
-    test "post /canvas retangle with outline and fill with lenght higher then 1", %{conn: conn} do
+    test "post /canvas rectangle with outline and fill with lenght higher then 1", %{conn: conn} do
       conn =
         post(conn, Routes.canvas_path(conn, :write_canvas), %{
-          "retangle" => %{
+          "rectangle" => %{
             "id" => 1,
             "width" => 14,
             "height" => 6,

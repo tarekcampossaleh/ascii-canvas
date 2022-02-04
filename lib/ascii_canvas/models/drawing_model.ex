@@ -66,7 +66,7 @@ defmodule AsciiCanvas.DrawingModel do
     end)
   end
 
-  @doc "Draws and update a canvas.value of retangle by a given canvas id"
+  @doc "Draws and update a canvas.value of rectangle by a given canvas id"
   def drawing(canvas_id, width, height, x, y, outline, fill) do
     canvas = Repo.get(CanvasSchema, canvas_id)
     update(canvas_id, write_canvas(canvas.value, width, height, x, y, outline, fill))
