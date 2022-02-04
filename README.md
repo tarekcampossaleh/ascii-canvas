@@ -29,15 +29,15 @@ Once populated, you can live-view the canvas by accessing the `localhost:4000/ca
    -  `height` - A `integer`, used for expressing the height size of the drawing
    -  `x` - A `integer`, used for defining the upper-left corner x-axis from 0 to 50
    -  `y` - A `integer`, used for defining the upper-left corner y-axis from 0 to 25
-   -  `outline_char` A `ASCII utf-8 char` used for defining the outline character. In case of `none`, assign the value `""`
-   -  `fill_char` A `ASCII utf-8 char` used for defining the fill character. In case of `none`, assign the value `""`
+   -  `outline_char` - A `ASCII utf-8 char` used for defining the outline character. In case of `none`, assign the value `""`
+   -  `fill_char` - A `ASCII utf-8 char` used for defining the fill character. In case of `none`, assign the value `""`
 
 
 - *Flood_fill*, parameterised with:
    -  `id` - Globally unique identifier, `integer`, used for selecting the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next available id is created.
    -  `x` - A `integer`, used for defining the upper-left corner x-axis from 0 to 50
    -  `y` - A `integer`, used for defining the upper-left corner y-axis from 0 to 25
-   -  `fill_char` A `ASCII utf-8 char` used for defining the flood fill character.
+   -  `fill_char` - A `ASCII utf-8 char` used for defining the flood fill character.
 
 ## Routes
 
