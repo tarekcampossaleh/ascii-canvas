@@ -1,4 +1,5 @@
 # AsciiCanvas
+> An Elixir + PhoenixLiveView application to make ASCII art drawing on a 50x25 canvas
 
 To start your Phoenix server:
 
@@ -6,14 +7,250 @@ To start your Phoenix server:
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser, and make http requests to `localhost:4000/canvas` to perform drawing operations
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Once populated, you can live-view the canvas by accessing the `localhost:4000/canvas/id` where `id` is a query param that references an existing canvas_id
 
-## Learn more
+## API Instructions
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+### For Drawing operations, we have the following options:
+
+- *Rectangle*, parameterised with:
+   -  `id` - Globally unique identifier, `integer`, used for select the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next avaliable id is created.
+   -  `width` - A `integer`, used for express the width size of the drawing
+   -  `height` - A `integer`, used for express the height size of the drawing
+   -  `x` - A `integer`, used for defining the upper-left corner x-axis from 0 to 50
+   -  `y` - A `integer`, used for defining the upper-left corner y-axis from 0 to 25
+   -  `outline_char` A `ASCII utf-8 char` used for defining the outline character. In case of `none`, assign the value `""`
+   -  `fill_char` A `ASCII utf-8 char` used for defining the fill character. In case of `none`, assign the value `""`
+
+
+- *Flood_fill*, parameterised with:
+   -  `id` - Globally unique identifier, `integer`, used for select the canvas drawing target. If the requested id doesn't exist, a blank 50x25 canvas with the next avaliable id is created.
+   -  `x` - A `integer`, used for defining the upper-left corner x-axis from 0 to 50
+   -  `y` - A `integer`, used for defining the upper-left corner y-axis from 0 to 25
+   -  `fill_char` A `ASCII utf-8 char` used for defining the flood fill character.
+
+## Routes
+
+### Drawing a rectangle:
+
+*Request:*
+
+```css
+POST /canvas
+```
+*Body:*
+
+```json
+{
+   "rectangle":{
+      "id":1,
+      "width":10,
+      "height":10,
+      "x":20,
+      "y":8,
+      "outline_char":"X",
+      "fill_char":""
+   }
+}
+```
+*Response:*
+
+```json
+{
+  "data": {
+    "canvas": [
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                    XXXXXXXXXXX                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    X         X                   ",
+      "                    XXXXXXXXXXX                   ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  "
+    ],
+    "canvas_id": 1
+  }
+}
+```
+
+Meshing a rectangle:
+
+*Request:*
+
+```css
+POST /canvas
+```
+*Body:*
+
+```json
+{
+   "rectangle":{
+      "id":1,
+      "width":10,
+      "height":10,
+      "x":12,
+      "y":3,
+      "outline_char":"O",
+      "fill_char":""
+   }
+}
+```
+*Response:*
+```json
+{
+  "data": {
+    "canvas": [
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "            OOOOOOOOOOO                           ",
+      "            O         O                           ",
+      "            O       XXOXXXXXXXX                   ",
+      "            O       X O       X                   ",
+      "            O       X O       X                   ",
+      "            O       X O       X                   ",
+      "            O       X O       X                   ",
+      "            O       X O       X                   ",
+      "            O       X O       X                   ",
+      "            O       X O       X                   ",
+      "            OOOOOOOOOOO       X                   ",
+      "                    X         X                   ",
+      "                    XXXXXXXXXXX                   ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  "
+    ],
+    "canvas_id": 1
+  }
+}
+```
+
+### Drawing a flood fill:
+
+*Request:*
+
+```css
+POST /canvas
+```
+*Body:*
+
+```json
+{
+   "flood_fill":{
+      "id":1,
+      "x":5,
+      "y":5,
+      "fill_char":"x"
+   }
+}
+```
+*Response:*
+
+```json
+{
+  "data": {
+    "canvas": [
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    ],
+    "canvas_id": 1
+  }
+}
+```
+
+### We also can create an empty 50x25 canvas by making a `post /canvas` with no body, e.g.
+
+*Request:*
+
+```css
+POST /canvas
+```
+*Body:*
+
+```json
+{}
+```
+*Response:*
+```json
+{
+  "data": {
+    "canvas": [
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  ",
+      "                                                  "
+    ],
+    "canvas_id": 1,
+    "message": "Canvas of id: 1 created"
+  }
+}
+```
