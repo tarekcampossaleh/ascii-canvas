@@ -3,24 +3,6 @@ defmodule AsciiCanvasWeb.CanvasController do
 
   alias AsciiCanvas.{CanvasSchema, DrawingModel, CanvasModel, Repo}
 
-  # def validate_canvas(outline, fill) do
-  #  if fill == "none" and outline == "none" do 
-  #    {:error, message: "One of either fill or outline should always be present"}
-  #  else 
-  #    if fill == "none", do: fill = ""
-  #    if outline == "none", do: outline = fill
-  #  end
-  # end
-  #
-  #
-  defp validate(char) when char != "none" do
-    if byte_size(char) > 1 do
-      false
-    else
-      true
-    end
-  end
-
   @outline_fill_error "One of either Fill or Outline should always be present"
   @byte_size_error "Fill and Outline should always have byte_size lenght of 1"
 
@@ -36,12 +18,25 @@ defmodule AsciiCanvasWeb.CanvasController do
           "fill_char" => fill
         }
       }) do
-    # TODO: validations of char and outline
-    # outline = if outline == "none", do: _outline = fill
-    # if fill == "none" and outline == "none", do: render(conn, "error.json", message: @outline_fill_error)
-    # if validate(outline) == false or validate(fill) == false, do: render(conn, "error.json", message: @byte_size_error) 
+    if fill == "" and outline == "",
+      do:
+        conn
+        |> put_status(:precondition_failed)
+        |> render("error.json", message: @outline_fill_error)
 
-    # render(conn, "error.json", message: message)
+    outline =
+      if outline == "" do
+        _outline = fill
+      else
+        outline
+      end
+
+    if byte_size("#{outline}") > 1 or byte_size("#{fill}") > 1,
+      do:
+        conn
+        |> put_status(:precondition_failed)
+        |> render("error.json", message: @byte_size_error)
+
     case Repo.get(CanvasSchema, id) do
       nil ->
         {:ok, canvas} = CanvasModel.create_blank_value()

@@ -150,5 +150,205 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
                }
              }
     end
+
+    test "post /canvas retangle with fill none", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "retangle" => %{
+            "id" => 1,
+            "width" => 14,
+            "height" => 6,
+            "x" => 10,
+            "y" => 3,
+            "outline_char" => "X",
+            "fill_char" => ""
+          }
+        })
+
+      res = json_response(conn, 201)
+
+      assert res == %{
+               "data" => %{
+                 "canvas" => [
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          X             X                         ",
+                   "          X             X                         ",
+                   "          X             X                         ",
+                   "          X             X                         ",
+                   "          X             X                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  "
+                 ],
+                 "canvas_id" => res["data"]["canvas_id"]
+               }
+             }
+    end
+
+    test "post /canvas retangle with outline none", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "retangle" => %{
+            "id" => 1,
+            "width" => 14,
+            "height" => 6,
+            "x" => 10,
+            "y" => 3,
+            "outline_char" => "",
+            "fill_char" => "X"
+          }
+        })
+
+      res = json_response(conn, 201)
+
+      assert res == %{
+               "data" => %{
+                 "canvas" => [
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "          XXXXXXXXXXXXXXX                         ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  "
+                 ],
+                 "canvas_id" => res["data"]["canvas_id"]
+               }
+             }
+    end
+
+    test "post /canvas retangle with outline and fill none", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "retangle" => %{
+            "id" => 1,
+            "width" => 14,
+            "height" => 6,
+            "x" => 10,
+            "y" => 3,
+            "outline_char" => "",
+            "fill_char" => ""
+          }
+        })
+
+      res = json_response(conn, 201)
+
+      refute res == %{
+               "data" => %{
+                 "canvas" => [
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                  ",
+                   "                                                ",
+                   "                                                ",
+                   "                                                ",
+                   "                                                ",
+                   "                                                ",
+                   "                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  "
+                 ],
+                 "canvas_id" => res["data"]["canvas_id"]
+               }
+             }
+    end
+
+    test "post /canvas retangle with outline with lenght higher then 1", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "retangle" => %{
+            "id" => 1,
+            "width" => 14,
+            "height" => 6,
+            "x" => 10,
+            "y" => 3,
+            "outline_char" => "XXX",
+            "fill_char" => "X"
+          }
+        })
+
+      res = json_response(conn, 201)
+
+      refute res == %{
+               "data" => %{
+                 "canvas" => [
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                       ",
+                   "          XXXXXXXXXXXXXXXXX                           ",
+                   "          XXXXXXXXXXXXXXXXX                           ",
+                   "          XXXXXXXXXXXXXXXXX                           ",
+                   "          XXXXXXXXXXXXXXXXX                           ",
+                   "          XXXXXXXXXXXXXXXXX                           ",
+                   "          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                       ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  ",
+                   "                                                  "
+                 ],
+                 "canvas_id" => res["data"]["canvas_id"]
+               }
+             }
+    end
   end
 end
