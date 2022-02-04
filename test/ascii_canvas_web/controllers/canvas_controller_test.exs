@@ -388,5 +388,47 @@ defmodule AsciiCanvasWeb.CanvasControllerTest do
                }
              }
     end
+
+    test "post /canvas flood_fill with fill none", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "flood_fill" => %{
+            "id" => 1,
+            "x" => 0,
+            "y" => 0,
+            "fill_char" => ""
+          }
+        })
+
+      res = json_response(conn, 412)
+
+      assert res == %{
+               "data" => %{
+                 "error" =>
+                   "Fill should always be present or should always have byte_size lenght of 1 in flood_fill drawings"
+               }
+             }
+    end
+
+    test "post /canvas flood_fill with fill with lenght higher then 1", %{conn: conn} do
+      conn =
+        post(conn, Routes.canvas_path(conn, :write_canvas), %{
+          "flood_fill" => %{
+            "id" => 1,
+            "x" => 0,
+            "y" => 0,
+            "fill_char" => "XXXX"
+          }
+        })
+
+      res = json_response(conn, 412)
+
+      assert res == %{
+               "data" => %{
+                 "error" =>
+                   "Fill should always be present or should always have byte_size lenght of 1 in flood_fill drawings"
+               }
+             }
+    end
   end
 end
